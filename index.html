@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Handschrift Studio</title>
+<meta name="description" content="Zeichne deine Buchstaben und verwandle Text in deine eigene Handschrift.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23192949'/%3E%3Cpath d='M8 24L12 12L23 5L27 9L20 20Z' fill='%2388d9fb'/%3E%3C/svg%3E">
+<style>
+:root{font-family:Inter,Arial,sans-serif;color:#18233d;background:#edf0f5;font-size:16px;--ink:#192949;--blue:#254dd8;--line:#dce2ed}*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #3b73f0;outline-offset:3px}header{height:84px;background:var(--ink);color:white;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;gap:20px}.brand{font-size:1.25rem;font-weight:750;letter-spacing:-.6px;display:flex;align-items:center;gap:12px}.mark{display:grid;place-items:center;width:36px;height:36px;border:1px solid #6c86aa;border-radius:10px;font-size:1.6rem;color:#92dcff}.badge{font-size:.875rem;background:#314363;padding:8px 12px;border-radius:30px;color:#d9e4f8}.intro{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:32px 0 24px}.intro h1{font-size:2rem;letter-spacing:-1px;margin:0 0 8px}.intro p{margin:0;color:#526078;line-height:1.6}.privacy{font-size:.875rem;color:#526078;max-width:210px;text-align:right}main{max-width:1500px;padding:0 4vw 36px;margin:auto}.workspace{display:grid;grid-template-columns:minmax(340px,440px) minmax(0,1fr);gap:24px;align-items:start}.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:18px}.heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}h2{font-size:1.05rem;margin:0}.step{color:#64728b;font-size:.8rem;display:block;margin-bottom:6px;font-weight:600;letter-spacing:1.5px}.counter,.small{font-size:.875rem;color:#596780}.small{line-height:1.55}label{font-size:.875rem;font-weight:600;display:block;margin-bottom:8px}select,input[type=text]{border:1px solid #cbd3e1;background:white;border-radius:8px;padding:10px;width:100%;color:var(--ink)}.alphabet{display:grid;grid-template-columns:repeat(9,1fr);gap:5px;margin:14px 0}.letter{aspect-ratio:1;border:1px solid #dce2ed;border-radius:6px;background:white;padding:0;min-height:34px;color:#526078}.letter.drawn{background:#edf4fc;border-color:#9eb7df;color:#182e59}.letter.selected{background:var(--ink);color:white;border-color:var(--ink)}.drawing{position:relative;border:1px solid #bdcbe0;border-radius:10px;overflow:hidden;background:#f8fbff}.drawing canvas{display:block;width:100%;touch-action:none;aspect-ratio:360/240}.hint{position:absolute;top:10px;left:12px;color:#647792;font-size:.8rem;pointer-events:none}.actions{display:flex;gap:8px;margin-top:12px}.button{border:1px solid #c8d1e0;background:white;padding:10px 14px;border-radius:8px;color:var(--ink);font-size:.875rem}.button.primary{background:var(--blue);color:white;border-color:var(--blue);margin-left:auto}.button:disabled{opacity:.4;cursor:default}.tip{margin-bottom:0}textarea{width:100%;min-height:185px;border:1px solid #cbd3e1;border-radius:8px;padding:14px;resize:vertical;line-height:1.6;color:#263554;background:#fcfdff}.settings{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}input[type=range]{width:100%;accent-color:var(--blue)}.preview-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:0 0 16px}.preview-head h2{font-size:1rem}.preview-head span{font-size:.875rem;color:#596780}.paper-wrap{background:#dfe5ef;border-radius:14px;padding:28px;max-height:900px;overflow:auto}.sheet{background:white;box-shadow:0 8px 24px #19294912;margin:0 auto 22px;max-width:595px}.sheet:last-child{margin-bottom:0}.sheet svg{display:block;width:100%;height:auto}.notice{border-radius:10px;padding:14px 16px;background:#fff4dd;color:#75531a;font-size:.875rem;line-height:1.6;margin:16px 0}.notice button{border:0;background:none;color:#75531a;font-weight:700;padding:0;text-decoration:underline}.status{font-size:.875rem;color:#516078;min-height:22px;margin:10px 0 0}.export{border:1px solid #cbd3e1;border-left:4px solid #59739c;background:#f8faff;padding:18px;border-radius:10px;line-height:1.6;font-size:.875rem;margin-top:18px}.export strong{display:block;font-size:1rem;margin-bottom:5px}.export p{margin:0}.saved{color:#355889}footer{font-size:.8rem;color:#667187;margin-top:26px;line-height:1.6}.empty{color:#64728b}#globalStatus{color:#8a3f20}.pen-note{margin:8px 0 0;font-size:.8rem;color:#596780}@media(max-width:900px){.workspace{grid-template-columns:1fr}.intro{align-items:start}.privacy{display:none}.paper-wrap{max-height:750px}.panel{padding:20px}main{padding:0 20px 28px}header{padding:0 20px}.intro h1{font-size:1.65rem}}@media(max-width:440px){.badge{display:none}.settings{grid-template-columns:1fr}.paper-wrap{padding:12px}.actions{flex-wrap:wrap}.button.primary{margin-left:0}.intro{margin-top:24px}.alphabet{grid-template-columns:repeat(8,1fr)}}
+
+.letter{aspect-ratio:auto;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}.letter small{font-size:.75rem;opacity:.8}.letter.complete{border-bottom:3px solid #254dd8}.letter.selected{border-color:#192949}
+.variant-heading{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:20px 0 10px}.variant-heading h3{font-size:.875rem;margin:0}.variants{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-bottom:16px}.variant{position:relative;height:58px;border:1px dashed #c6d0df;border-radius:8px;background:#f8faff;color:#65758f;text-align:left;padding:4px}.variant span{font-size:.75rem;position:absolute;top:4px;left:5px}.variant svg{display:block;width:100%;height:100%}.variant.drawn{border-style:solid;color:#223d78;background:#edf4fc}.variant.selected{outline:2px solid #254dd8;outline-offset:1px;background:#eaf0ff}.variant:disabled,.letter:disabled{cursor:default}#nextVariant{width:100%;margin-left:0}.actions .button{flex:1;padding-left:8px;padding-right:8px}.counter{max-width:125px;text-align:right}
+</style>
+</head>
+<body>
+<header><div class="brand"><span class="mark" aria-hidden="true">✎</span>Handschrift Studio</div><span class="badge">Goodnotes-Export · Beta</span></header>
+<main>
+<div class="intro"><div><h1>Dein Text. Deine Handschrift.</h1><p>Zehn Varianten pro Zeichen. Runde Striche. Deine ganz eigene Handschrift.</p></div><div class="privacy">Deine Eingaben bleiben<br>in diesem Browser.</div></div>
+<div id="globalStatus" role="status"></div>
+<div class="workspace"><div>
+<section class="panel" aria-labelledby="fontHeading"><div class="heading"><div><span class="step">01 / DEINE HANDSCHRIFT</span><h2 id="fontHeading">Buchstaben einzeichnen</h2></div><span id="count" class="counter"></span></div>
+<label for="group">Zeichengruppe</label><select id="group"><option value="lower">Kleinbuchstaben</option><option value="upper">Großbuchstaben</option><option value="numbers">Zahlen &amp; Satzzeichen</option><option value="needed">Im Text noch ergänzen</option></select>
+<div id="alphabet" class="alphabet" aria-label="Zeichen auswählen"></div>
+<div class="variant-heading"><h3>Deine zehn Varianten</h3><span id="variantProgress" class="small"></span></div><div id="variants" class="variants" aria-label="Zehn Varianten des ausgewählten Zeichens"></div>
+<div class="drawing"><span class="hint" id="drawHint"></span><canvas id="pad" width="720" height="480" aria-label="Zeichenfeld für den ausgewählten Buchstaben"></canvas></div>
+<p class="pen-note">Mit Stift, Finger oder Maus · Grundlinie bei der unteren blauen Linie</p>
+<div class="actions"><button class="button" id="undo">Rückgängig</button><button class="button" id="clear">Zeichen leeren</button><button class="button" id="next">Zeichen wechseln →</button></div><div class="actions"><button class="button primary" id="nextVariant">Nächste Variante →</button></div>
+<p class="status saved" id="saveStatus" role="status"></p>
+<p class="small tip">Kleine Buchstaben passen zwischen die blauen Linien. Oberlängen reichen darüber, Unterlängen darunter. Zeichne jede Variante vollständig und tippe dann auf „Nächste Variante“. Jeder Strich wird automatisch gespeichert und sanft geglättet.</p>
+</section>
+<section class="panel" aria-labelledby="textHeading"><div class="heading"><div><span class="step">02 / DEIN TEXT</span><h2 id="textHeading">Was möchtest du schreiben?</h2></div></div>
+<label for="text">Text einfügen</label><textarea id="text" maxlength="15000" placeholder="Schreibe hier deinen Text …">Hallo, das ist meine Handschrift.</textarea>
+<div class="settings"><div><label for="size">Schriftgröße <span id="sizeValue"></span></label><input id="size" type="range" min="14" max="36" value="22"></div><div><label for="paper">Papier</label><select id="paper"><option value="lined">Liniert</option><option value="grid">Kariert</option><option value="blank">Blanko</option></select></div><div><label for="spacing">Zeilenabstand <span id="spacingValue"></span></label><input id="spacing" type="range" min="1.5" max="2.8" step="0.1" value="2"></div><div><label for="ink">Tintenfarbe</label><select id="ink"><option value="#223d78">Tintenblau</option><option value="#24272c">Schwarz</option><option value="#6e2b50">Bordeaux</option></select></div></div>
+</section></div>
+<section aria-labelledby="previewHeading"><div class="preview-head"><h2 id="previewHeading">Deine Seiten</h2><span id="pageCount">A4 · Live-Vorschau</span></div><div id="missing" class="notice" role="status"></div><div id="pages" class="paper-wrap"></div>
+<div class="export"><strong>03 / In Goodnotes öffnen</strong><label for="documentTitle">Name des Notizbuchs</label><input id="documentTitle" type="text" maxlength="100" value="Meine Handschrift"><div class="actions"><button class="button primary" id="exportGoodnotes" disabled>Als .goodnotes herunterladen</button></div><p id="exportStatus" class="status" role="status"></p><p class="small" style="margin-top:10px">Deine Varianten wechseln sich im Text ab. Die abgerundeten Striche bleiben in Goodnotes einzeln bearbeitbar.</p></div>
+</section></div>
+<footer>Die Handschrift besteht aus deinen einzeln gezeichneten Zeichen. Verbindungen zwischen Buchstaben werden nicht automatisch ergänzt. Handschrift und Text werden auf diesem Gerät im Browser gespeichert; beim Löschen der Browserdaten gehen sie verloren.</footer>
+</main>
+<script>
+// Shared geometry for the drawing pad, page preview, thumbnail and native export.
+const InkGeometry = (() => {
+  function prepare(path) {
+    if (path.length < 3) return path.map(p => [...p]);
+    // Uniform spacing makes smoothing independent of pointer event frequency.
+    const points = [[...path[0]]]; let left = 4, previous = path[0];
+    for (let i = 1; i < path.length; i++) {
+      const target = path[i]; let distance = Math.hypot(target[0]-previous[0],target[1]-previous[1]);
+      while (distance >= left && distance > 0) {
+        const next = [previous[0]+(target[0]-previous[0])*left/distance, previous[1]+(target[1]-previous[1])*left/distance];
+        points.push(next); previous=next; distance=Math.hypot(target[0]-previous[0],target[1]-previous[1]); left=4;
+      }
+      left-=distance; previous=target;
+    }
+    const last=path[path.length-1];
+    if(Math.hypot(last[0]-points.at(-1)[0],last[1]-points.at(-1)[1])>.01)points.push([...last]);
+    // Light local smoothing, with fixed endpoints and no curve overshoot.
+    return points.map((p,i)=>i===0||i===points.length-1?[...p]:[
+      points[i-1][0]*.2+p[0]*.6+points[i+1][0]*.2,
+      points[i-1][1]*.2+p[1]*.6+points[i+1][1]*.2
+    ]);
+  }
+  function curve(points) {
+    const start=points[0],segments=[];
+    if(points.length===1)return {start,segments};
+    if(points.length===2){segments.push([(start[0]+points[1][0])/2,(start[1]+points[1][1])/2,...points[1]]);return {start,segments}}
+    for(let i=1;i<points.length-1;i++)segments.push([...points[i],(points[i][0]+points[i+1][0])/2,(points[i][1]+points[i+1][1])/2]);
+    segments.push([...points.at(-1),...points.at(-1)]);
+    return {start,segments};
+  }
+  function svg(points){const c=curve(points);return 'M '+c.start.join(' ')+' '+c.segments.map(s=>'Q '+s.join(' ')).join(' ')}
+  function draw(ctx,points){const c=curve(points);ctx.beginPath();if(!c.segments.length){ctx.arc(c.start[0],c.start[1],1.6,0,Math.PI*2);ctx.fill();return}ctx.moveTo(...c.start);for(const q of c.segments)ctx.quadraticCurveTo(...q);ctx.stroke()}
+  return {prepare,curve,svg,draw};
+})();
+
+// Goodnotes schema 24 writer, based on the structure of the supplied sample.
+// No source notebook content, identities, history, or thumbnails are included.
+const GoodnotesExport = (() => {
+  const enc = new TextEncoder();
+  const inkScale = 132 / 72;
+  const bytes = s => enc.encode(s);
+  const join = parts => {const out=new Uint8Array(parts.reduce((n,p)=>n+p.length,0));let at=0;for(const p of parts){out.set(p,at);at+=p.length}return out};
+  const num = (n,size,float=false) => {const b=new Uint8Array(size),v=new DataView(b.buffer);if(float){size===8?v.setFloat64(0,n,true):v.setFloat32(0,n,true)}else{size===2?v.setUint16(0,n,true):v.setUint32(0,n,true)}return b};
+  function variable(value){let n=BigInt(value);if(n<0n)throw Error('Negative unsigned value');const out=[];do{let v=Number(n&127n);n>>=7n;if(n)v|=128;out.push(v)}while(n);return Uint8Array.from(out)}
+  const uint=(k,v)=>join([variable(k*8),variable(v)]);
+  const data=(k,v)=>{const b=typeof v==='string'?bytes(v):v;return join([variable(k*8+2),variable(b.length),b])};
+  const f32=(k,v)=>join([variable(k*8+5),num(v,4,true)]);
+  const f64=(k,v)=>join([variable(k*8+1),num(v,8,true)]);
+  const msg=(...fields)=>join(fields);
+  const frame=b=>join([variable(b.length),b]);
+  const random=()=>crypto.getRandomValues(new Uint32Array(1))[0];
+  const uuid=()=>{const b=crypto.getRandomValues(new Uint8Array(16));b[6]=(b[6]&15)|64;b[8]=(b[8]&63)|128;const s=Array.from(b,v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();return `${s.slice(0,8)}-${s.slice(8,12)}-${s.slice(12,16)}-${s.slice(16,20)}-${s.slice(20)}`};
+  const revision=(version=1)=>msg(uint(1,version),uint(2,random()));
+  const wrapped=v=>msg(data(1,v),data(2,revision()));
+  const rgba=hex=>msg(...[1,2,3].map((k)=>f32(k,parseInt(hex.slice(1+(k-1)*2,3+(k-1)*2),16)/255)),f32(4,1));
+  // A single all-literal LZ4 block is valid, deterministic and dependency-free.
+  function appleLz4(raw){const size=raw.length,ext=[];if(size>=15){let remaining=size-15;while(remaining>=255){ext.push(255);remaining-=255}ext.push(remaining)}const block=join([Uint8Array.of(Math.min(size,15)<<4,...ext),raw]);return join([bytes('bv41'),num(size,4),num(block.length,4),block,bytes('bv4$')])}
+  function strokeImage(points,width){
+    // TPL: brush, width, path commands, move points, quadratic segments, cap, dash array.
+    const ps=points.length===1?[points[0],[points[0][0]+.001,points[0][1]]]:points;
+    const curve=InkGeometry.curve(ps);
+    const commands=join([num(curve.segments.length+1,4),num(0,2),...curve.segments.map(()=>num(1,2))]);
+    const move=join([num(1,4),...curve.start.map(v=>num(v,4,true))]);
+    const curves=[num(curve.segments.length,4)];
+    for(const q of curve.segments)curves.push(...q.map(v=>num(v,4,true)));
+    const body=join([bytes('vuA(v)A(S(uu))A(S(uuuu))vA(f)\0'),num(2,2),num(width,4,true),commands,move,join(curves),num(1,2),num(0,4)]);
+    return appleLz4(join([bytes('tpl\0'),num(body.length+8,4),body]));
+  }
+  function background(paper,line){
+    let content='q\n1 0 0 -1 0 842 cm\n1 1 1 rg\n0 0 595 842 re f\n0.8627 0.8980 0.9451 RG\n0.65 w\n';
+    if(paper!=='blank'){const step=paper==='grid'?20:line;for(let y=paper==='grid'?40:60;y<810;y+=step)content+=`30 ${y.toFixed(3)} m 565 ${y.toFixed(3)} l S\n`;if(paper==='grid')for(let x=30;x<570;x+=20)content+=`${x} 40 m ${x} 820 l S\n`}
+    content+='Q\n';
+    const objects=['<< /Type /Catalog /Pages 2 0 R >>','<< /Type /Pages /Kids [3 0 R] /Count 1 >>','<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << >> /Contents 4 0 R >>',`<< /Length ${bytes(content).length} >>\nstream\n${content}endstream`];
+    let pdf='%PDF-1.7\n',offset=[0];objects.forEach((body,i)=>{offset.push(bytes(pdf).length);pdf+=`${i+1} 0 obj\n${body}\nendobj\n`});const xref=bytes(pdf).length;pdf+=`xref\n0 5\n0000000000 65535 f \n${offset.slice(1).map(n=>String(n).padStart(10,'0')+' 00000 n \n').join('')}trailer\n<< /Size 5 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`;return bytes(pdf);
+  }
+  const crcTable=Array.from({length:256},(_,i)=>{for(let n=0;n<8;n++)i=(i&1)?0xedb88320^(i>>>1):i>>>1;return i>>>0});
+  const crc32=b=>{let crc=0xffffffff;for(const v of b)crc=crcTable[(crc^v)&255]^(crc>>>8);return (crc^0xffffffff)>>>0};
+  function zip(entries){
+    const local=[],central=[];let offset=0;const date=new Date(),dosTime=(date.getHours()<<11)|(date.getMinutes()<<5)|(date.getSeconds()>>1),dosDate=((date.getFullYear()-1980)<<9)|((date.getMonth()+1)<<5)|date.getDate();
+    for(const [name,raw]of entries){const n=bytes(name),crc=crc32(raw);const common=join([num(20,2),num(0x800,2),num(0,2),num(dosTime,2),num(dosDate,2),num(crc,4),num(raw.length,4),num(raw.length,4),num(n.length,2)]);const head=join([num(0x04034b50,4),common,num(0,2),n]);local.push(head,raw);central.push(join([num(0x02014b50,4),num(20,2),common,num(0,2),num(0,2),num(0,2),num(0,2),num(0,4),num(offset,4),n]));offset+=head.length+raw.length}
+    const dir=join(central);return join([...local,dir,msg(num(0x06054b50,4),num(0,2),num(0,2),num(entries.length,2),num(entries.length,2),num(dir.length,4),num(offset,4),num(0,2))]);
+  }
+  async function create({pages,factor,line,paper,ink,title,thumbnail}){
+    if(!Array.isArray(pages)||!pages.length||pages.length>200)throw Error('Bitte maximal 200 Seiten exportieren.');
+    if(!Number.isFinite(factor)||factor<=0||!Number.isFinite(line)||line<=0||!/^#[\da-f]{6}$/i.test(ink))throw Error('Ungültige Seiteneinstellungen.');
+    let pointCount=0,strokeCount=0;for(const page of pages)for(const item of page){if(item.g.missing||!item.g.ss?.length)throw Error('Bitte zuerst alle fehlenden Zeichen zeichnen.');for(const s of item.g.ss){strokeCount++;pointCount+=s.length;if(!s.length||s.some(p=>p.length!==2||p.some(v=>!Number.isFinite(v))))throw Error('Ungültige Zeichendaten.')}}
+    if(!strokeCount)throw Error('Bitte zuerst Text eingeben und Buchstaben zeichnen.');
+    if(pointCount>1500000||strokeCount>40000)throw Error('Der Text ist zu groß. Bitte in mehrere Dokumente aufteilen.');
+    const doc=uuid(),parent=uuid(),actor=(BigInt(random())<<32n)|BigInt(random()),now=Date.now(),attachment=uuid(),pdf=background(paper,line),events=[],notesIndex=[],entries=[];let seq=1;
+    const audit=(actorField,timeField,schemaField)=>[f64(10,now+seq++),data(11,uuid()),uint(actorField,actor),uint(timeField,now+seq),uint(schemaField,24)];
+    const event=(id,type,payload)=>events.push(frame(msg(data(1,id),data(type,payload))));
+    event(doc,30,msg(data(1,doc),data(2,wrapped(title||'Meine Handschrift')),data(3,wrapped(parent)),data(6,wrapped('P')),data(7,wrapped(parent)),data(9,'auto'),...audit(13,14,20),data(17,new Uint8Array()),data(18,new Uint8Array()),data(19,msg(data(2,revision())))));
+    event(attachment,6,msg(data(1,attachment),data(2,attachment),uint(5,pdf.length),data(6,doc),...audit(14,15,16),data(12,msg(uint(1,1),uint(2,1)))));
+    for(let pageIndex=0;pageIndex<pages.length;pageIndex++){
+      const template=uuid(),page=uuid().slice(0,-4)+'0000',note=page.slice(0,-4)+'0001';
+      event(template,2,msg(data(1,doc),data(2,template),data(4,attachment),uint(5,1),uint(6,1),f64(7,line*inkScale),data(8,msg(f32(1,595*inkScale),f32(2,842*inkScale))),data(9,'Handschrift Studio'),...audit(15,16,21),data(12,msg(f64(1,line*inkScale),data(2,revision()))),data(13,msg(uint(1,1),data(2,revision()))),data(17,msg(uint(1,1),data(2,revision()))),data(18,msg(data(1,msg(data(1,msg(f32(1,30*inkScale),f32(2,40*inkScale))),data(2,msg(f32(1,535*inkScale),f32(2,762*inkScale))))),f32(2,line*inkScale),f32(3,1),uint(5,1))),data(19,msg(data(2,revision())))));
+      event(page,54,msg(data(1,doc),data(2,page),data(3,wrapped(template)),data(4,wrapped('f1pIE'+String(pageIndex).padStart(5,'0'))),...audit(13,14,15),data(17,msg(data(1,msg(data(2,msg(data(1,rgba('#dddddd')),data(2,rgba('#ffffff')))))),data(2,revision())))));
+      event(note,104,msg(data(1,doc),data(2,note),...audit(17,18,19),data(13,'auto'),uint(14,1),data(15,uuid())));
+      const records=[];let order=0;
+      for(const item of pages[pageIndex])for(const path of item.g.ss){
+        const id=uuid(),rev=revision(2),points=path.map(([x,y])=>[(item.x+(x-item.g.b.min)*factor)*inkScale,(item.y+(y-175)*factor)*inkScale]);
+        if(points.some(p=>p.some(v=>!Number.isFinite(v))))throw Error('Ungültige Strichposition.');
+        records.push(frame(msg(data(1,id),data(2,rev),uint(8,actor),uint(9,seq++),uint(14,5381),uint(16,24))));
+        records.push(frame(data(7,msg(data(1,id),data(2,strokeImage(points,3.2*factor*inkScale)),data(4,rgba(ink)),data(6,new Uint8Array()),data(7,msg(data(1,msg(uint(1,order++),uint(2,random()))))),data(9,new Uint8Array()),data(15,rev),data(20,new Uint8Array()),uint(21,24)))));
+      }
+      notesIndex.push(frame(msg(data(1,note),data(2,'notes/'+note))));entries.push(['notes/'+note,join(records)]);
+      // Yield between pages so large exports do not lock up the drawing UI.
+      if(pageIndex%4===3)await new Promise(resolve=>setTimeout(resolve,0));
+    }
+    entries.unshift(['document.info.pb',new Uint8Array()],['index.search.pb',new Uint8Array()],['index.notes.pb',join(notesIndex)],['index.events.pb',join(events)],['index.attachments.pb',frame(msg(data(1,attachment),data(2,'attachments/'+attachment)))],['attachments/'+attachment,pdf],['schema.pb',uint(1,24)]);
+    if(thumbnail?.length)entries.push(['thumbnail.jpg',thumbnail]);
+    return {bytes:zip(entries),pageCount:pages.length,strokeCount};
+  }
+  return {create};
+})();
+
+</script>
+<script>
+'use strict';
+const $=id=>document.getElementById(id), NS='http://www.w3.org/2000/svg', VARIANT_COUNT=10;
+const groups={lower:[...'abcdefghijklmnopqrstuvwxyzäöüß'],upper:[...'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ'],numbers:[...'0123456789.,:;!?–-()[]/„“"\'@%+=€&']};
+let exporting=false,glyphs=Object.create(null),selected='a',slot=0,strokes=[],active=null,pointer=null,storageOK=true;
+const pad=$('pad'),ctx=pad.getContext('2d');ctx.scale(2,2);
+function message(t){$('saveStatus').textContent=t}
+function clone(s){return s.map(path=>path.map(p=>[...p]))}
+function validSample(ss){return Array.isArray(ss)&&ss.length>0&&ss.length<=200&&ss.every(s=>Array.isArray(s)&&s.length>0&&s.length<=10000&&s.every(p=>Array.isArray(p)&&p.length===2&&p.every(Number.isFinite)&&p[0]>=0&&p[0]<=360&&p[1]>=0&&p[1]<=240))}
+function migrateData(data,legacy){
+  const result=Object.create(null);
+  if(data?.glyphs&&typeof data.glyphs==='object')for(const [char,raw]of Object.entries(data.glyphs)){
+    if([...char].length!==1)continue;
+    const samples=legacy?[raw]:(Array.isArray(raw)?raw:[]);
+    const slots=Array.from({length:VARIANT_COUNT},(_,i)=>validSample(samples[i])?clone(samples[i]):null);
+    if(slots.some(Boolean))result[char]=slots;
+  }
+  return result;
+}
+try{
+  const current=localStorage.getItem('handschrift-studio-v2'),old=current?null:localStorage.getItem('handschrift-studio-v1');
+  if(current||old){const data=JSON.parse(current||old);glyphs=migrateData(data,!current);if(typeof data.text==='string')$('text').value=data.text.slice(0,15000);if(old)$('globalStatus').textContent='Deine bisherigen Zeichen wurden als Variante 1 übernommen. Du kannst jeweils neun weitere ergänzen.'}
+}catch(e){storageOK=false;$('globalStatus').textContent='Gespeicherte Daten konnten nicht geladen werden. Die bisherigen Daten bleiben erhalten.'}
+function persist(){try{localStorage.setItem('handschrift-studio-v2',JSON.stringify({version:2,glyphs,text:$('text').value}));storageOK=true;message('Auf diesem Gerät gespeichert.')}catch(e){storageOK=false;message('Nur für diese Sitzung gespeichert. Der Browser-Speicher ist nicht verfügbar oder voll.')}}
+function available(c){return (glyphs[c]||[]).map((ss,index)=>({ss,index})).filter(v=>v.ss?.length)}
+function missingChars(){return [...new Set([...$('text').value.normalize('NFC')].filter(c=>!(/\s/u.test(c))&&!available(c).length))]}
+function incompleteChars(){return [...new Set([...$('text').value.normalize('NFC')].filter(c=>!(/\s/u.test(c))&&available(c).length<VARIANT_COUNT))]}
+function chars(){return $('group').value==='needed'?incompleteChars():groups[$('group').value]}
+function drawPad(){
+  ctx.clearRect(0,0,360,240);ctx.fillStyle='#f8fbff';ctx.fillRect(0,0,360,240);
+  for(const y of [55,95,175,215]){ctx.beginPath();ctx.strokeStyle=(y===95||y===175)?'#b8cdec':'#e1e8f3';ctx.lineWidth=1;ctx.moveTo(0,y+.5);ctx.lineTo(360,y+.5);ctx.stroke()}
+  ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#223d78';ctx.fillStyle='#223d78';ctx.lineWidth=3.2;
+  for(const s of strokes)InkGeometry.draw(ctx,InkGeometry.prepare(s));
+  $('drawHint').textContent=selected+' · Variante '+(slot+1)+' von 10';pad.setAttribute('aria-label','Zeichenfeld für '+selected+', Variante '+(slot+1));
+  $('undo').disabled=!strokes.length||pointer!==null;$('clear').disabled=!strokes.length||pointer!==null;$('nextVariant').disabled=!strokes.length||pointer!==null;
+}
+function refreshVariants(){
+  $('variants').replaceChildren();const samples=glyphs[selected]||[],count=available(selected).length;
+  $('variantProgress').textContent=count+' von 10 gezeichnet';
+  for(let i=0;i<VARIANT_COUNT;i++){
+    const b=document.createElement('button');b.className='variant'+(samples[i]?.length?' drawn':'')+(slot===i?' selected':'');
+    b.setAttribute('aria-label',selected+', Variante '+(i+1)+(samples[i]?.length?' – gezeichnet':' – noch offen'));b.setAttribute('aria-pressed',String(i===slot));b.disabled=pointer!==null;
+    const number=document.createElement('span');number.textContent=i+1;b.append(number);
+    if(samples[i]?.length){const svg=svgEl('svg',{viewBox:'0 0 360 240','aria-hidden':'true'});for(const path of samples[i]){const s=InkGeometry.prepare(path);svg.append(s.length===1?svgEl('circle',{cx:s[0][0],cy:s[0][1],r:7,fill:'currentColor'}):svgEl('path',{d:InkGeometry.svg(s),fill:'none',stroke:'currentColor','stroke-width':7,'stroke-linecap':'round','stroke-linejoin':'round'}))}b.append(svg)}
+    b.onclick=()=>choose(selected,i);$('variants').append(b);
+  }
+  $('nextVariant').textContent=count===VARIANT_COUNT?'Nächstes Zeichen →':'Nächste Variante →';
+}
+function refreshAlphabet(){
+  const list=chars();$('alphabet').replaceChildren();
+  for(const c of list){const n=available(c).length,b=document.createElement('button');b.className='letter'+(n?' drawn':'')+(n===10?' complete':'')+(c===selected?' selected':'');
+    const letter=document.createElement('span');letter.textContent=c;const count=document.createElement('small');count.textContent=n+'/10';b.append(letter,count);
+    b.setAttribute('aria-label',c+' – '+n+' von 10 Varianten');b.setAttribute('aria-pressed',String(c===selected));b.disabled=pointer!==null;b.onclick=()=>choose(c);$('alphabet').append(b)}
+  if(!list.length){const s=document.createElement('span');s.className='small';s.style.gridColumn='1 / -1';s.textContent='Alle Zeichen in deinem Text haben zehn Varianten.';$('alphabet').append(s)}
+  $('count').textContent=Object.keys(glyphs).filter(c=>available(c).length===10).length+' Zeichen komplett';refreshVariants();
+}
+function choose(c,index){if(!c||pointer!==null)return;selected=c;slot=index??Math.max(0,Array.from({length:10},(_,i)=>glyphs[c]?.[i]).findIndex(s=>!s?.length));strokes=clone(glyphs[c]?.[slot]||[]);active=null;drawPad();refreshAlphabet()}
+function commit(){const samples=glyphs[selected]||Array(10).fill(null);samples[slot]=strokes.length?clone(strokes):null;if(samples.some(Boolean))glyphs[selected]=samples;else delete glyphs[selected];persist();refreshAlphabet();render()}
+function pos(e){const r=pad.getBoundingClientRect();return [Math.max(0,Math.min(360,(e.clientX-r.left)*360/r.width)),Math.max(0,Math.min(240,(e.clientY-r.top)*240/r.height))]}
+pad.addEventListener('pointerdown',e=>{if(pointer!==null||e.button!==0)return;e.preventDefault();pointer=e.pointerId;pad.setPointerCapture(pointer);active=[pos(e)];strokes.push(active);drawPad();refreshAlphabet()});
+pad.addEventListener('pointermove',e=>{if(e.pointerId!==pointer||!active)return;e.preventDefault();const samples=e.getCoalescedEvents?.();for(const sample of samples?.length?samples:[e]){const p=pos(sample),last=active.at(-1);if(Math.hypot(p[0]-last[0],p[1]-last[1])>.4)active.push(p)}drawPad()});
+function end(e){if(e.pointerId!==pointer)return;if(e.type==='pointerup'&&active){const p=pos(e),last=active.at(-1);if(Math.hypot(p[0]-last[0],p[1]-last[1])>.01)active.push(p)}active=null;pointer=null;commit();drawPad()}
+pad.addEventListener('pointerup',end);pad.addEventListener('pointercancel',end);pad.addEventListener('lostpointercapture',end);
+function nextCharacter(){const list=chars(),index=list.indexOf(selected);choose(list[(index+1)%list.length])}
+$('undo').onclick=()=>{if(pointer!==null)return;strokes.pop();commit();drawPad()};$('clear').onclick=()=>{if(pointer!==null)return;strokes=[];commit();drawPad()};$('next').onclick=nextCharacter;
+$('nextVariant').onclick=()=>{if(pointer!==null||!strokes.length)return;for(let n=1;n<=10;n++){const next=(slot+n)%10;if(!glyphs[selected]?.[next]?.length){choose(selected,next);return}}nextCharacter()};
+$('group').onchange=()=>choose(chars()[0]||selected);
+function svgEl(name,attrs){const el=document.createElementNS(NS,name);for(const [k,v]of Object.entries(attrs))el.setAttribute(k,v);return el}
+function bounds(ss){let min=360,max=0;for(const s of ss)for(const p of s){min=Math.min(min,p[0]);max=Math.max(max,p[0])}return {min,max}}
+function variantPicker(){
+  const states=new Map();
+  return c=>{
+    const options=available(c);if(!options.length)return null;
+    let state=states.get(c);if(!state){state={bag:[],cycle:0,last:-1};states.set(c,state)}
+    if(!state.bag.length){
+      const bag=[...options];let seed=(c.codePointAt(0)*2654435761+state.cycle++*1013904223)>>>0;
+      for(let i=bag.length-1;i>0;i--){seed=(Math.imul(seed,1664525)+1013904223)>>>0;const j=seed%(i+1);[bag[i],bag[j]]=[bag[j],bag[i]]}
+      if(bag.length>1&&bag[0].index===state.last)[bag[0],bag[1]]=[bag[1],bag[0]];state.bag=bag;
+    }
+    const value=state.bag.shift();state.last=value.index;return value;
+  };
+}
+function layout(text,size,spacing){
+  const factor=size/120,line=size*spacing,right=550,top=60,bottom=795,pages=[[]],pick=variantPicker(),cache=new Map();let x=45,y=top;
+  function info(c){
+    if(/\s/u.test(c))return {width:size*.43};const chosen=pick(c);if(!chosen)return {width:size*.56,missing:true};
+    const key=c+':'+chosen.index;if(cache.has(key))return cache.get(key);
+    const ss=chosen.ss.map(InkGeometry.prepare),b=bounds(ss),g={width:Math.max(2,(b.max-b.min)*factor)+size*.12,b,ss,variant:chosen.index};cache.set(key,g);return g;
+  }
+  function newline(){x=45;y+=line;if(y>bottom){pages.push([]);y=top}}
+  for(const token of text.replace(/\r\n?/g,'\n').normalize('NFC').match(/\n|[^\S\n]+|[^\s]+/gu)||[]){
+    if(token==='\n'){newline();continue}
+    // Select once, then measure and draw the same variant.
+    const list=[...token].map(c=>({c,g:info(c)})),width=list.reduce((a,item)=>a+item.g.width,0);
+    if(!/^\s/u.test(token)&&x>45&&x+width>right)newline();
+    for(const {c,g}of list){if(x+g.width>right)newline();if(!/\s/u.test(c))pages.at(-1).push({c,x,y,g});x+=g.width}
+  }
+  return {pages,factor,line};
+}
+function render(){
+  const size=+$('size').value,spacing=+$('spacing').value,ink=$('ink').value,paper=$('paper').value;
+  $('sizeValue').textContent=size;$('spacingValue').textContent=spacing.toFixed(1);
+  const missing=missingChars(),incomplete=incompleteChars(),notice=$('missing');notice.replaceChildren();notice.hidden=!incomplete.length;
+  if(incomplete.length){notice.append(document.createTextNode(missing.length?missing.length+' Zeichen fehlen noch. Orange Zeichen sind Platzhalter. ':incomplete.length+' Zeichen haben noch weniger als zehn Varianten. Die Vorschau verwendet die bereits gezeichneten Formen. '));const b=document.createElement('button');b.textContent=missing.length?'Fehlende Zeichen zeichnen':'Varianten ergänzen';b.onclick=()=>{$('group').value='needed';choose(missing[0]||incomplete[0]);pad.scrollIntoView({behavior:'smooth',block:'center'})};notice.append(b)}
+  const result=layout($('text').value,size,spacing);$('pages').replaceChildren();
+  result.pages.forEach((items,i)=>{const sheet=document.createElement('div');sheet.className='sheet';const svg=svgEl('svg',{viewBox:'0 0 595 842',role:'img','aria-label':'Handschrift-Seite '+(i+1)});svg.append(svgEl('rect',{width:595,height:842,fill:'white'}));
+    if(paper!=='blank'){const step=paper==='grid'?20:result.line;for(let y=paper==='grid'?40:60;y<810;y+=step)svg.append(svgEl('line',{x1:30,x2:565,y1:y,y2:y,stroke:'#dce5f1','stroke-width':.65}));if(paper==='grid')for(let x=30;x<570;x+=20)svg.append(svgEl('line',{x1:x,x2:x,y1:40,y2:820,stroke:'#dce5f1','stroke-width':.65}))}
+    for(const {c,x,y,g}of items){if(g.missing){const t=svgEl('text',{x,y,fill:'#bf7027','font-family':'Arial,sans-serif','font-size':size*.82});t.textContent=c;svg.append(t)}else{const group=svgEl('g',{transform:`translate(${x},${y}) scale(${result.factor}) translate(${-g.b.min},-175)`,fill:'none',stroke:ink,'stroke-width':3.2,'stroke-linecap':'round','stroke-linejoin':'round'});for(const s of g.ss)group.append(s.length===1?svgEl('circle',{cx:s[0][0],cy:s[0][1],r:1.6,fill:ink,stroke:'none'}):svgEl('path',{d:InkGeometry.svg(s)}));svg.append(group)}}
+    if(!$('text').value.trim()){const t=svgEl('text',{x:45,y:65,fill:'#77859c','font-size':15,'font-family':'Arial'});t.textContent='Dein Text erscheint hier.';svg.append(t)}sheet.append(svg);$('pages').append(sheet);
+  });
+  $('pageCount').textContent='A4 · '+result.pages.length+(result.pages.length===1?' Seite':' Seiten');
+  $('exportGoodnotes').disabled=exporting||missing.length>0||!$('text').value.trim();
+  if(!exporting)$('exportStatus').textContent=missing.length?'Zeichne zuerst die fehlenden Zeichen.':(!$('text').value.trim()?'Gib zuerst deinen Text ein.':(incomplete.length?'Export möglich. Für mehr Abwechslung ergänze zehn Varianten pro Zeichen.':'Alle Varianten bereit.'));
+  return {pages:result.pages.length,missing};
+}
+let timer;$('text').oninput=()=>{clearTimeout(timer);timer=setTimeout(()=>{persist();refreshAlphabet();render()},200)};for(const id of ['size','spacing','paper','ink'])$(id).oninput=render;
+function makeThumbnail(result,paper,ink){
+  const canvas=document.createElement('canvas');canvas.width=595;canvas.height=842;const c=canvas.getContext('2d');c.fillStyle='white';c.fillRect(0,0,595,842);c.lineWidth=.65;c.strokeStyle='#dce5f1';
+  if(paper!=='blank'){const step=paper==='grid'?20:result.line;for(let y=paper==='grid'?40:60;y<810;y+=step){c.beginPath();c.moveTo(30,y);c.lineTo(565,y);c.stroke()}if(paper==='grid')for(let x=30;x<570;x+=20){c.beginPath();c.moveTo(x,40);c.lineTo(x,820);c.stroke()}}
+  c.strokeStyle=ink;c.fillStyle=ink;c.lineCap='round';c.lineJoin='round';
+  for(const item of result.pages[0]){c.save();c.translate(item.x,item.y);c.scale(result.factor,result.factor);c.translate(-item.g.b.min,-175);c.lineWidth=3.2;for(const path of item.g.ss)InkGeometry.draw(c,path);c.restore()}
+  return Uint8Array.from(atob(canvas.toDataURL('image/jpeg',.85).split(',')[1]),c=>c.charCodeAt(0));
+}
+$('exportGoodnotes').onclick=async()=>{
+  if(exporting)return;clearTimeout(timer);persist();render();if(missingChars().length||!$('text').value.trim())return;
+  exporting=true;$('exportGoodnotes').disabled=true;$('exportStatus').textContent='Deine Goodnotes-Datei wird erstellt …';
+  try{
+    const result=layout($('text').value,+$('size').value,+$('spacing').value),paper=$('paper').value,ink=$('ink').value,title=$('documentTitle').value.trim()||'Meine Handschrift';
+    const out=await GoodnotesExport.create({...result,paper,ink,title,thumbnail:makeThumbnail(result,paper,ink)});
+    const blob=new Blob([out.bytes],{type:'application/octet-stream'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=title.replace(/[<>:"/\\|?*\x00-\x1F]/g,'_').slice(0,90)+'.goodnotes';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+    exporting=false;render();$('exportStatus').textContent=out.pageCount+(out.pageCount===1?' Seite':' Seiten')+' erstellt. Öffne die heruntergeladene Datei in Goodnotes.';
+  }catch(e){exporting=false;render();$('exportStatus').textContent='Export fehlgeschlagen: '+e.message}
+};
+choose(selected);render();message(storageOK?'Zeichne jede Variante vollständig, dann wähle „Nächste Variante“.':'Nur für diese Sitzung verfügbar.');
+const context=document.modelContext;if(context?.registerTool){const lifecycle=new AbortController();window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true});try{Promise.resolve(context.registerTool({name:'set_handwriting_text',title:'Text für Handschrift festlegen',description:'Ersetzt den Text im sichtbaren Handschrift-Editor. Erzeugt keine Goodnotes-Datei.',inputSchema:{type:'object',properties:{text:{type:'string',maxLength:15000}},required:['text'],additionalProperties:false},annotations:{readOnlyHint:false,untrustedContentHint:false},execute(input){if(!input||typeof input.text!=='string'||input.text.length>15000||Object.keys(input).some(k=>k!=='text'))throw new Error('Text mit maximal 15000 Zeichen erforderlich.');$('text').value=input.text;persist();refreshAlphabet();return render()}},{signal:lifecycle.signal})).catch(()=>{})}catch(e){}}
+</script>
+</body></html>
