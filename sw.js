@@ -1,10 +1,5 @@
-/* Same-origin app assets only. Never caches requests to external services. */
-const CACHE='handschrift-studio-v3-20260930-2';
-const ASSETS=['./','./index.html','./studio.css?v=2','./learning.js?v=2','./storage.js?v=2','./references.js?v=2','./studio.js?v=2','./vendor/pdf.min.mjs','./vendor/pdf.worker.min.mjs'];
-self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS))));
-self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('handschrift-studio-v3-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',event=>{
-  const u=new URL(event.request.url);if(event.request.method!=='GET'||u.origin!==self.location.origin)return;
-  const known=ASSETS.map(p=>new URL(p,self.registration.scope).href);if(!known.includes(u.href))return;
-  event.respondWith(caches.open(CACHE).then(async cache=>{const saved=await cache.match(event.request);return saved||fetch(event.request)}));
-});
+const CACHE='handschrift-studio-v4-20261001';
+const ASSETS=['./','./index.html','./design.css?v=4','./storage.js?v=4','./pdf-export.js?v=4','./config.js?v=4','./vendor/supabase.js?v=4','./editor-plus.js?v=4','./cloud.js?v=4'];
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('handschrift-studio-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(e.request.method!=='GET'||u.origin!==self.location.origin)return;const known=ASSETS.map(p=>new URL(p,self.registration.scope).pathname);if(!known.includes(u.pathname))return;e.respondWith((async()=>{const c=await caches.open(CACHE),controller=new AbortController(),timer=setTimeout(()=>controller.abort(),5000);try{const response=await fetch(e.request,{signal:controller.signal});if(response.ok)await c.put(e.request,response.clone());return response}catch(err){const saved=await c.match(e.request,{ignoreSearch:true});if(saved)return saved;throw err}finally{clearTimeout(timer)}})())});
