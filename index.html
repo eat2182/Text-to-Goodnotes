@@ -11,7 +11,7 @@
 .letter{aspect-ratio:auto;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}.letter small{font-size:.75rem;opacity:.8}.letter.complete{border-bottom:3px solid #254dd8}.letter.selected{border-color:#192949}
 .variant-heading{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:20px 0 10px}.variant-heading h3{font-size:.875rem;margin:0}.variants{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-bottom:16px}.variant{position:relative;height:58px;border:1px dashed #c6d0df;border-radius:8px;background:#f8faff;color:#65758f;text-align:left;padding:4px}.variant span{font-size:.75rem;position:absolute;top:4px;left:5px}.variant svg{display:block;width:100%;height:100%}.variant.drawn{border-style:solid;color:#223d78;background:#edf4fc}.variant.selected{outline:2px solid #254dd8;outline-offset:1px;background:#eaf0ff}.variant:disabled,.letter:disabled{cursor:default}#nextVariant{width:100%;margin-left:0}.actions .button{flex:1;padding-left:8px;padding-right:8px}.counter{max-width:125px;text-align:right}
 </style>
-<link rel="stylesheet" href="studio.css">
+<link rel="stylesheet" href="studio.css?v=2">
 </head>
 <body>
 <header><div class="brand"><span class="mark" aria-hidden="true">✎</span>Handschrift Studio</div><span class="badge">Goodnotes-Export · Beta</span></header>
@@ -312,8 +312,14 @@ $('exportGoodnotes').onclick=async()=>{
 choose(selected);render();message(storageOK?'Zeichne jede Variante vollständig, dann wähle „Nächste Variante“.':'Nur für diese Sitzung verfügbar.');
 const context=document.modelContext;if(context?.registerTool){const lifecycle=new AbortController();window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true});try{Promise.resolve(context.registerTool({name:'set_handwriting_text',title:'Text für Handschrift festlegen',description:'Ersetzt den Text im sichtbaren Handschrift-Editor. Erzeugt keine Goodnotes-Datei.',inputSchema:{type:'object',properties:{text:{type:'string',maxLength:15000}},required:['text'],additionalProperties:false},annotations:{readOnlyHint:false,untrustedContentHint:false},execute(input){if(!input||typeof input.text!=='string'||input.text.length>15000||Object.keys(input).some(k=>k!=='text'))throw new Error('Text mit maximal 15000 Zeichen erforderlich.');$('text').value=input.text;persist();refreshAlphabet();return render()}},{signal:lifecycle.signal})).catch(()=>{})}catch(e){}}
 </script>
-<script src="learning.js"></script>
-<script src="storage.js"></script>
-<script src="references.js"></script>
-<script src="studio.js"></script>
-</body></html>
+<script src="learning.js?v=2"></script>
+<script src="storage.js?v=2"></script>
+<script src="references.js?v=2"></script>
+<script src="studio.js?v=2"></script>
+<script>
+(function(){
+  function report(text){var el=document.getElementById('localStatus');if(el){el.textContent=text;el.classList.add('studio-error')}var main=document.querySelector('main');if(main)main.classList.remove('studio-boot')}
+  if(!window.HandLearning||!window.HandStorage||!window.HandReferences)report('Eine Erweiterungsdatei fehlt oder konnte nicht geladen werden. Bitte den gesamten ZIP-Inhalt auf GitHub hochladen und alle Studio-Tabs neu öffnen.');
+  window.addEventListener('unhandledrejection',function(e){if(!window.HandStudio)report('Der Start ist fehlgeschlagen: '+String(e.reason&&e.reason.message||e.reason)+'. Deine gespeicherten Daten wurden nicht gelöscht.');});
+})();
+</script></body></html>
